@@ -1,9 +1,12 @@
-#schema.py #CREATE USER TABLE
+#CREATE USER TABLE
 def create_user_table(conn):
     cursor = conn.cursor()
-    cursor.execute(""" CREATE TABLE IF NOT EXISTS users ( 
+    cursor.execute(
+        """ CREATE TABLE IF NOT EXISTS users ( 
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
     username TEXT NOT NULL UNIQUE, 
     password_hash TEXT NOT NULL, 
-    role TEXT DEFAULT 'user' ) """) 
+    role TEXT DEFAULT 'user' ) 
+    """) 
     conn.commit()
+    print("User table created successfully!")
