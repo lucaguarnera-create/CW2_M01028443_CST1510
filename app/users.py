@@ -2,14 +2,7 @@
 import sqlite3
 import pandas as pd
 
-def create_user_table(conn):
-    cursor = conn.cursor()
-    cursor.execute(""" CREATE TABLE IF NOT EXISTS users ( 
-    id INTEGER PRIMARY KEY AUTOINCREMENT, 
-    username TEXT NOT NULL UNIQUE, 
-    password_hash TEXT NOT NULL, 
-    role TEXT DEFAULT 'user' ) """) 
-    conn.commit()
+
 
 def add_user(conn, username, password_hash):
     cur = conn.cursor()

@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
- 
-df = pd.DataFrame({
-    "region": ["North", "South", "East", "West"],
-    "year": [2023, 2023, 2024, 2025],
-    "revenue": [45000, 30000, 50000, 35000]
-})
+
+
+from app.db import conn
+from app.cyber_incidents import get_cyber_incidents, migrate_cyber_incidents_table
+
+df = get_cyber_incidents(conn)
  
 st.set_page_config(
     page_title='My app',
@@ -17,20 +17,20 @@ st.set_page_config(
 st.title("📊 Sales Dashboard")
 with st.sidebar:
     st.header('Control')
-    year = st.selectbox('Year', [2023, 2024, 2025])
+    year = st.selectbox('Year', ['Low', 'Medium', 'High'])
     
  
-filter = df[(df['year'] == year)]
+#filter = df[(df['severity'] == year)]
  
 col1, col2 = st.columns(2)
  
 with col1:
     st.subheader('Left')
-    st.bar_chart(filter)
+    st.bar_chart(x='timestamp', y='incident_id', data=df)
  
 with col2:
     st.subheader('Right')
-    st.line_chart(filter)
+    st.line_chart(x='status', y='incident_id', data=df)
  
  
 with st.expander('See details'):
